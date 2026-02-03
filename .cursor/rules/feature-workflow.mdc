@@ -1,0 +1,22 @@
+---
+description: Use Feature Development Agent for new features and issue-driven work
+globs: "**/*"
+alwaysApply: false
+---
+
+# Feature development workflow
+
+When the user asks to **add a feature**, **implement an issue**, or **develop from GitHub/requirements**:
+
+1. **Delegate to the Feature Development Agent**  
+   Invoke the `feature-dev-agent` subagent so it can run the full flow: obtain requirements → acceptance criteria → implement → test → commit/push.
+
+2. **Requirements source**
+   - Prefer programmatic: run `scripts/fetch-requirements.js` with `GITHUB_REPO` and `GITHUB_ISSUE` (and `GITHUB_TOKEN` if needed).
+   - Otherwise use REQUIREMENTS.md, issue body, or user-provided acceptance criteria.
+
+3. **Do not skip verification**  
+   Always run the project test script after implementation and fix any failures before suggesting commit.
+
+4. **Commit and push**  
+   Suggest a clear commit message and remind about `git push`; only run git commands if the user has confirmed.

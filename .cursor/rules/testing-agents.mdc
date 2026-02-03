@@ -1,0 +1,22 @@
+---
+description: Delegate to unit, UI, or API test agents when adding or running tests
+globs: "**/*"
+alwaysApply: false
+---
+
+# Testing agents
+
+When the user asks to **add tests**, **write tests**, or **run tests**, delegate to the appropriate testing agent:
+
+| User intent | Agent |
+|-------------|--------|
+| Unit tests, test coverage, testing a function/module | `unit-test-agent` |
+| UI tests, E2E, browser tests, testing a page or flow | `ui-test-agent` |
+| API tests, HTTP/REST tests, testing endpoints | `api-test-agent` |
+
+- If the user says "unit tests" or "test this function" → use **unit-test-agent**.
+- If the user says "UI tests", "E2E", or "test in browser" → use **ui-test-agent**.
+- If the user says "API tests" or "test this endpoint" → use **api-test-agent**.
+- If unclear, ask or pick the agent that best matches the code under test (module vs page vs API).
+
+After feature work, the Feature Development Agent already runs the project test script; use these agents when the user explicitly wants to add or improve unit, UI, or API tests.

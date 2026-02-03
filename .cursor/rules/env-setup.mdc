@@ -1,0 +1,17 @@
+---
+description: Delegate to env-setup-agent when setting up environment variables or local dev
+globs: "**/*"
+alwaysApply: false
+---
+
+# Env setup agent
+
+When the user asks to **set up env**, **create .env**, **document environment variables**, **local dev setup**, or **onboarding**:
+
+- Delegate to the **env-setup-agent** so it can:
+  - Create or update `.env.example` with placeholders (never real secrets).
+  - Ensure `.env` is in `.gitignore` and document how to copy `.env.example` to `.env`.
+  - Optionally add a validation script for required vars.
+  - Update README or SETUP.md with env and first-run steps.
+
+Do not put real secrets in any committed file; use placeholders in `.env.example` only.

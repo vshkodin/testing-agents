@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Env and secrets (never commit)
+.env
+.env.local
+.env.*.local
+
+# Logs and OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Build / coverage (if added later)
+dist/
+coverage/
+.build/

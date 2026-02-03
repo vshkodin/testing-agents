@@ -1,0 +1,19 @@
+---
+description: Delegate to github-agent for GitHub issues, PRs, commits, and repo workflow
+globs: "**/*"
+alwaysApply: false
+---
+
+# GitHub agent
+
+When the user asks about **GitHub**, an **issue**, a **PR**, **commit message**, **branch name**, or **fetching requirements from GitHub**:
+
+- Delegate to the **github-agent** so it can:
+  - Fetch issue or requirements (e.g. run `scripts/fetch-requirements.js` with GITHUB_REPO, GITHUB_ISSUE, GITHUB_TOKEN).
+  - Propose a commit message from staged or recent changes.
+  - Draft a PR description or suggest a branch name.
+  - Summarize issue/PR context.
+
+For **implementing** a feature from an issue, the feature-dev-agent already uses the fetch script; use github-agent when the user only wants to fetch/summarize issue data, get a commit message, or prepare a PR—not full implementation.
+
+Never put GITHUB_TOKEN or secrets in prompts or committed files; use env vars only.
