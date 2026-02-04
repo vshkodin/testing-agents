@@ -8,8 +8,8 @@ This document explains how the assessment requirements are met and how to demons
 
 | Requirement | How it's met |
 |-------------|--------------|
-| **Codebase in GitHub + feature to add/refactor** | This repo (crane) is a minimal Node API. You can push it to GitHub and add a feature (e.g. a new endpoint, health check improvement) as the demo. |
-| **AI-driven development (prompting, context, agents, MCP)** | **Prompting**: Clear user prompts drive the flow. **Context**: Cursor rules and agent prompt provide persistent context. **Agents**: Custom subagent `feature-dev-agent`. **MCP**: cursor-ide-browser can be used to open GitHub, run the app in browser, or verify UI. |
+| **Codebase in GitHub + feature to add/refactor** | This repo is a minimal Node API; published as **vshkodin/testing-agents** on GitHub. Add a feature (e.g. GET /api/version, login + Playwright tests) as the demo. |
+| **AI-driven development (prompting, context, agents, MCP)** | **Prompting**: Clear user prompts drive the flow. **Context**: Cursor rules and agent prompt provide persistent context. **Agents**: Custom subagent `feature-dev-agent`. **MCP**: Playwright MCP (`.cursor/mcp.json`), cursor-ide-browser, and gh-cli-mcp (optional) for browser automation and GitHub via MCP. |
 | **Requirements / acceptance criteria programmatically** | `scripts/fetch-requirements.js` fetches a GitHub issue via GitHub API and parses acceptance criteria from the issue body. |
 | **Develop and push code changes** | Agent implements the feature, runs tests, suggests commit message, and reminds to push (or runs git with user approval). |
 | **Show an Agent you have built** | **Feature Development Agent** in `.cursor/agents/feature-dev-agent.md`. |
@@ -138,13 +138,19 @@ You can **narrate the demo** by saying:
 | `.cursor/agents/api-test-agent.md` | API Test Agent: writes and runs API/HTTP tests for endpoints. |
 | `.cursor/agents/env-setup-agent.md` | Env Setup Agent: sets up .env, .env.example, and documents required vars. |
 | `.cursor/agents/github-agent.md` | GitHub Agent: fetch issues/PRs, requirements, commit message, PR description, branch name. |
+| `.cursor/agents/gh-mcp-testing-agent.md` | GH MCP Testing Agent: use gh via MCP for workflows, issues/PRs, repo checks. |
 | `.cursor/rules/feature-workflow.mdc` | Rule: delegate feature work to the agent and use programmatic requirements when using GitHub. |
 | `.cursor/rules/testing-agents.mdc` | Rule: delegate to unit-test-agent, ui-test-agent, or api-test-agent when adding/running tests. |
 | `.cursor/rules/env-setup.mdc` | Rule: delegate to env-setup-agent when setting up env or local dev. |
 | `.cursor/rules/github-agent.mdc` | Rule: delegate to github-agent for GitHub issues, PRs, commits, repo workflow. |
+| `.cursor/rules/gh-mcp-testing.mdc` | Rule: delegate to gh-mcp-testing-agent when using gh via MCP. |
+| `.cursor/mcp.json` | Playwright MCP server config (browser automation). |
 | `scripts/fetch-requirements.js` | Fetches a GitHub issue and parses acceptance criteria (programmatic requirements). |
 | `scripts/run-tests.js` | Project test runner used by the agent for verification. |
-| `src/server.js` | Minimal API; new features (e.g. `/api/version`) are added here for the demo. |
+| `playwright.config.js` | Playwright E2E config (baseURL, webServer, headless: false). |
+| `e2e/login.spec.js` | Playwright login E2E tests (dummy credentials). |
+| `public/login.html`, `public/welcome.html` | Login page and welcome page (dummy: dummy/dummy). |
+| `src/server.js` | Minimal API; new features (e.g. `/api/version`, `/login`, `/play`) are added here. |
 | `ASSESSMENT_DEMO.md` | This file: requirements mapping, build explanation, and demo script. |
 
 ---
@@ -170,5 +176,8 @@ You can **narrate the demo** by saying:
 - *"Use the github-agent to fetch issue #N and give me the acceptance criteria."*
 - *"Use the github-agent to suggest a commit message for my staged changes."*
 - *"Use the github-agent to draft a PR description for this branch."*
+
+**GH via MCP**
+- *"Use the gh-mcp-testing-agent to run the CI workflow."* (requires gh-cli-mcp enabled)
 
 These prompts, plus the agents and rules, show **AI-driven development** from **requirements/acceptance criteria** (including programmatic fetch) through **development**, **testing** (unit, UI, API), and **pushing** the code, with **custom agents** you built and can demonstrate and explain.

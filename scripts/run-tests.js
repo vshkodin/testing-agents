@@ -8,7 +8,13 @@ function request(path) {
     http.get(url, (res) => {
       let data = '';
       res.on('data', (chunk) => (data += chunk));
-      res.on('end', () => resolve({ status: res.statusCode, body: data }));
+      res.on('end', () =>
+        resolve({
+          status: res.statusCode,
+          headers: res.headers,
+          body: data,
+        })
+      );
     }).on('error', reject);
   });
 }
@@ -33,13 +39,27 @@ async function run() {
     t('GET / returns valid JSON', false);
   }
 
+  // Health check tests
   const health = await request('/health');
   t('GET /health returns 200', health.status === 200);
+  t(
+    'GET /health returns Content-Type application/json',
+    (health.headers['content-type'] || '').toLowerCase().includes('application/json')
+  );
+  let healthJson;
   try {
-    const json = JSON.parse(health.body);
-    t('GET /health returns status ok', json.status === 'ok');
+    healthJson = JSON.parse(health.body);
+    t('GET /health returns valid JSON', true);
   } catch (_) {
     t('GET /health returns valid JSON', false);
+  }
+  if (healthJson) {
+    t('GET /health returns status ok', healthJson.status === 'ok');
+    t('GET /health returns timestamp field', typeof healthJson.timestamp === 'string');
+    t(
+      'GET /health timestamp is valid ISO 8601',
+      healthJson.timestamp && !Number.isNaN(Date.parse(healthJson.timestamp))
+    );
   }
 
   const play = await request('/play');
