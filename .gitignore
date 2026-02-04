@@ -5,6 +5,9 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.development
+.env.test
+.env.production
 
 # Logs and OS
 *.log
@@ -12,7 +15,28 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Build / coverage (if added later)
+# Build / coverage
 dist/
 coverage/
 .build/
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+blob-report/
+.playwright/
+
+# IDE / editor
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Misc
+.cache/
+.npm
+.yarn-integrity
+*.tgz
