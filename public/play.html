@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playwright Playground – Crane</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 480px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+    }
+    h1 { font-size: 1.25rem; margin-bottom: 1.5rem; color: #a0e0a0; }
+    section { margin-bottom: 1.5rem; }
+    section h2 { font-size: 0.9rem; color: #888; margin-bottom: 0.5rem; }
+    a {
+      display: inline-block;
+      margin: 0.25rem 0.5rem 0.25rem 0;
+      color: #6eb6ff;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    button {
+      background: #2d4a6f;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 0.25rem 0.5rem 0.25rem 0;
+    }
+    button:hover { background: #3d5a8f; }
+    input[type="text"] {
+      padding: 0.5rem;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background: #252535;
+      color: #eee;
+      width: 100%;
+      max-width: 280px;
+    }
+    #out {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: #252535;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      min-height: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Playwright Playground</h1>
+  <p>Use Playwright MCP to navigate, click, and type here.</p>
+
+  <section>
+    <h2>Links</h2>
+    <a href="/">API root (JSON)</a>
+    <a href="/health">Health check</a>
+    <a href="/play">This page</a>
+  </section>
+
+  <section>
+    <h2>Buttons</h2>
+    <button type="button" data-action="hello">Say Hello</button>
+    <button type="button" data-action="time">Show time</button>
+    <button type="button" data-action="clear">Clear</button>
+  </section>
+
+  <section>
+    <h2>Form</h2>
+    <form id="form" aria-label="Echo form">
+      <label for="input">Type something:</label>
+      <input id="input" name="q" type="text" placeholder="e.g. Hello Playwright" aria-label="Echo input" />
+      <button type="submit">Echo</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Output</h2>
+    <div id="out" aria-live="polite"></div>
+  </section>
+
+  <script>
+    const out = document.getElementById('out');
+    const input = document.getElementById('input');
+
+    function log(msg) {
+      out.textContent = msg;
+    }
+
+    document.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-action');
+        if (action === 'hello') log('Hello from the playground!');
+        else if (action === 'time') log('Time: ' + new Date().toLocaleTimeString());
+        else if (action === 'clear') log('');
+      });
+    });
+
+    document.getElementById('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = (input.value || '').trim();
+      log(q ? 'You said: ' + q : '(empty)');
+    });
+  </script>
+</body>
+</html>

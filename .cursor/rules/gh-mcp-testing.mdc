@@ -1,0 +1,17 @@
+---
+description: Delegate to gh-mcp-testing-agent when using GitHub CLI via MCP or testing with gh
+globs: "**/*"
+alwaysApply: false
+---
+
+# GH MCP Testing agent
+
+When the user asks to **use gh via MCP**, **test with GitHub CLI**, **run workflows via MCP**, **create test issues/PRs with gh**, or **use the gh MCP server**:
+
+- Delegate to the **gh-mcp-testing-agent** so it can use gh-cli-mcp MCP tools (workflows, issues, PRs, repo ops) or suggest equivalent `gh` CLI commands.
+
+Requires the **gh-cli-mcp** MCP server to be installed and enabled in Cursor:
+
+- Install: `npm install -g gh-cli-mcp`
+- Add to Cursor MCP config (e.g. Cursor Settings → MCP) with command `gh-cli-mcp` (stdio).
+- Ensure `gh` is authenticated: `gh auth login`.

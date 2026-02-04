@@ -42,6 +42,18 @@ async function run() {
     t('GET /health returns valid JSON', false);
   }
 
+  const play = await request('/play');
+  t('GET /play returns 200', play.status === 200);
+  t('GET /play returns HTML with Playwright Playground', play.body.includes('Playwright Playground'));
+
+  const login = await request('/login');
+  t('GET /login returns 200', login.status === 200);
+  t('GET /login returns HTML with Login', login.body.includes('Login'));
+
+  const welcome = await request('/welcome');
+  t('GET /welcome returns 200', welcome.status === 200);
+  t('GET /welcome returns HTML with Welcome', welcome.body.includes('Welcome'));
+
   const notFound = await request('/unknown');
   t('GET /unknown returns 404', notFound.status === 404);
 

@@ -19,6 +19,8 @@ Minimal Node API for AI-driven feature development (assessment demo).
 
    Optional env check before start: `node scripts/check-env.js` (add required vars in the script if needed).
 
+3. **E2E (Playwright):** `npm run test:e2e` (starts the server if not running; dummy login: `dummy` / `dummy`).
+
 ## How to use agents
 
 Agents are Cursor subagents in `.cursor/agents/`. In Cursor chat, say **"Use the [agent-name] to …"** or ask for the task (e.g. "add unit tests"); project rules will delegate to the right agent.
@@ -31,6 +33,11 @@ Agents are Cursor subagents in `.cursor/agents/`. In Cursor chat, say **"Use the
 | **api-test-agent** | Add API tests, test HTTP endpoints | *"Use the api-test-agent to add API tests for the health and root endpoints."* |
 | **env-setup-agent** | Set up .env, document env vars, local dev / onboarding | *"Use the env-setup-agent to set up .env and document required vars."* |
 | **github-agent** | Fetch issues/PRs, requirements, commit message, PR description, branch name | *"Use the github-agent to fetch issue #3 and give me the acceptance criteria."* |
+| **gh-mcp-testing-agent** | Use gh via MCP: run workflows, test issues/PRs, repo checks (requires gh-cli-mcp) | *"Use the gh-mcp-testing-agent to run the CI workflow."* |
+
+**Playwright MCP:** Browser automation is configured in `.cursor/mcp.json` (Playwright MCP). Reload Cursor or reopen the project to load it. Then ask in chat, e.g. *"Go to http://localhost:3000 and take a snapshot"* or *"Open the repo on GitHub."* Uses tools like `browser_navigate`, `browser_snapshot`, `browser_click`.
+
+**GH CLI via MCP:** For testing with GitHub through MCP, enable the **gh-cli-mcp** server: `npm install -g gh-cli-mcp`, then add it in Cursor Settings → MCP (command: `gh-cli-mcp`). Use the **gh-mcp-testing-agent** to run workflows, create test issues/PRs, or check repo status via MCP tools.
 
 **Feature from GitHub:** To drive development from an issue, give the issue number and (for private repos) a token, then ask the feature-dev-agent to implement it. Requirements are fetched with:
 
@@ -44,5 +51,9 @@ Agent definitions live in `.cursor/agents/`; rules in `.cursor/rules/` tell Curs
 
 ## Endpoints
 
-- `GET /` – app info
-- `GET /health` – health check
+- `GET /` – app info (JSON)
+- `GET /health` – health check (JSON)
+- `GET /play` – Playwright playground (HTML: links, buttons, form)
+- `GET /login` – login page (dummy: `dummy` / `dummy`)
+- `POST /login` – submit login form
+- `GET /welcome` – welcome page (after login)
