@@ -45,7 +45,7 @@ Agents are Cursor subagents in `.cursor/agents/`. In Cursor chat, say **"Use the
 GITHUB_TOKEN=xxx node scripts/fetch-requirements.js owner/repo issue_number
 ```
 
-**Demo & explanation:** See [ASSESSMENT_DEMO.md](ASSESSMENT_DEMO.md).
+**Demo & explanation:** See [ASSESSMENT_DEMO.md](ASSESSMENT_DEMO.md). **AC fulfillment writeup:** See [AC_FULFILLMENT_WRITEUP.md](AC_FULFILLMENT_WRITEUP.md).
 
 Agent definitions live in `.cursor/agents/`; rules in `.cursor/rules/` tell Cursor when to delegate (e.g. "add unit tests" → unit-test-agent).
 
