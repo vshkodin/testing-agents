@@ -1,3 +1,5 @@
+require('./e2e/attach-video-to-allure');
+
 const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
@@ -13,6 +15,7 @@ module.exports = defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    video: 'on', // record every test; attach-video-to-allure.js attaches to Allure
     headless: !!process.env.CI,
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
