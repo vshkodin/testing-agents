@@ -21,6 +21,10 @@ coverage/
 .build/
 *.tsbuildinfo
 
+# Allure
+allure-results/
+allure-report/
+
 # Playwright
 test-results/
 playwright-report/

@@ -40,6 +40,12 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Setup Java (for Allure report)
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
       - run: npm ci
 
       - name: Install Playwright browsers
@@ -49,3 +55,23 @@ jobs:
         run: npm run test:e2e
         env:
           CI: true
+
+      - name: Generate Allure report (self-contained HTML)
+        id: allure
+        if: always()
+        run: |
+          if [ -n "$(ls -A allure-results 2>/dev/null)" ]; then
+            npm run report:allure
+            echo "generated=true" >> $GITHUB_OUTPUT
+          else
+            echo "No allure-results, skipping report"
+            echo "generated=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload Allure report
+        if: always() && steps.allure.outputs.generated == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 30

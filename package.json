@@ -8,10 +8,15 @@
     "dev": "node --watch src/server.js",
     "test": "node scripts/run-tests.js",
     "test:unit": "node --test test/*.js",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "report:allure": "allure generate allure-results -o allure-report --single-file"
   },
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.49.0"
+    "@playwright/test": "^1.49.0",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.5"
   }
 }
