@@ -1,12 +1,10 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { parseForm, validateCredentials } = require('./lib');
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC = path.join(__dirname, '..', 'public');
-
-const DUMMY_USER = 'dummy';
-const DUMMY_PASS = 'dummy';
 
 function serveFile(res, filePath, contentType) {
   fs.readFile(filePath, (err, data) => {
@@ -20,15 +18,6 @@ function serveFile(res, filePath, contentType) {
   });
 }
 
-function parseForm(body) {
-  const out = {};
-  for (const pair of (body || '').split('&')) {
-    const [k, v] = pair.split('=').map(s => decodeURIComponent((s || '').replace(/\+/g, ' ')));
-    if (k) out[k] = v;
-  }
-  return out;
-}
-
 const routes = {
   GET: {
     '/': (req, res) => {
@@ -36,7 +25,7 @@ const routes = {
       res.end(JSON.stringify({
         name: 'crane',
         version: '1.0.0',
-        endpoints: ['GET /', 'GET /health', 'GET /play', 'GET /login', 'GET /welcome'],
+        endpoints: ['GET /', 'GET /health', 'GET /play', 'GET /playwright-ui', 'GET /login', 'GET /welcome'],
       }));
     },
     '/health': (req, res) => {
@@ -44,15 +33,14 @@ const routes = {
       res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
     },
     '/play': (req, res) => serveFile(res, path.join(PUBLIC, 'play.html'), 'text/html'),
+    '/playwright-ui': (req, res) => serveFile(res, path.join(PUBLIC, 'playwright-ui.html'), 'text/html'),
     '/login': (req, res) => serveFile(res, path.join(PUBLIC, 'login.html'), 'text/html'),
     '/welcome': (req, res) => serveFile(res, path.join(PUBLIC, 'welcome.html'), 'text/html'),
   },
   POST: {
     '/login': (req, res, body) => {
       const form = parseForm(body);
-      const user = (form.username || '').trim();
-      const pass = (form.password || '').trim();
-      if (user === DUMMY_USER && pass === DUMMY_PASS) {
+      if (validateCredentials(form.username, form.password)) {
         res.writeHead(302, { Location: '/welcome' });
         res.end();
       } else {

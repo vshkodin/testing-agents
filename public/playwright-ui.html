@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playwright UI – Crane</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 360px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    h1 { font-size: 1.1rem; color: #7dd3fc; margin-bottom: 1rem; }
+    .row { margin-bottom: 1rem; }
+    a {
+      display: inline-block;
+      margin-right: 0.75rem;
+      color: #93c5fd;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    button {
+      background: #374151;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    button:hover { background: #4b5563; }
+    input[type="text"] {
+      padding: 0.5rem;
+      border: 1px solid #374151;
+      border-radius: 6px;
+      background: #1f2937;
+      color: #fff;
+      width: 100%;
+    }
+    #result {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: #1f2937;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      min-height: 2.5rem;
+    }
+    label { display: block; margin-bottom: 0.25rem; font-size: 0.875rem; color: #9ca3af; }
+  </style>
+</head>
+<body>
+  <h1 id="title">Playwright UI</h1>
+  <p id="subtitle">Small UI for Playwright MCP to interact with.</p>
+
+  <div class="row">
+    <a id="link-home" href="/">Home</a>
+    <a id="link-health" href="/health">Health</a>
+    <a id="link-play" href="/play">Play</a>
+  </div>
+
+  <div class="row">
+    <button id="btn-greet" type="button">Greet</button>
+    <button id="btn-time" type="button">Time</button>
+    <button id="btn-clear" type="button">Clear</button>
+  </div>
+
+  <div class="row">
+    <form id="echo-form">
+      <label for="echo-input">Echo text</label>
+      <input id="echo-input" name="text" type="text" placeholder="Type here" />
+      <button type="submit" id="btn-submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="result" aria-live="polite"></div>
+
+  <script>
+    const result = document.getElementById('result');
+    const input = document.getElementById('echo-input');
+
+    document.getElementById('btn-greet').addEventListener('click', () => {
+      result.textContent = 'Hello, Playwright!';
+    });
+    document.getElementById('btn-time').addEventListener('click', () => {
+      result.textContent = 'Time: ' + new Date().toLocaleTimeString();
+    });
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      result.textContent = '';
+    });
+
+    document.getElementById('echo-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = (input.value || '').trim();
+      result.textContent = text ? 'Echo: ' + text : '(empty)';
+    });
+  </script>
+</body>
+</html>
