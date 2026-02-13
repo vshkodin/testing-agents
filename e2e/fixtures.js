@@ -1,4 +1,4 @@
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 test.afterEach(async ({ page }, testInfo) => {
   try {
@@ -9,3 +9,5 @@ test.afterEach(async ({ page }, testInfo) => {
     }
   } catch (_) {}
 });
+
+module.exports = { test, expect };
