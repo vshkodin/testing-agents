@@ -6,7 +6,7 @@ alwaysApply: false
 
 # GH MCP Testing agent
 
-When the user asks to **use gh via MCP**, **test with GitHub CLI**, **run workflows via MCP**, **create test issues/PRs with gh**, or **use the gh MCP server**:
+When the user asks to **run tests in GHA**, **check if CI is passing or failing**, **use gh via MCP**, **test with GitHub CLI**, **run workflows via MCP**, **create test issues/PRs with gh**, or **use the gh MCP server**:
 
 - Delegate to the **gh-mcp-testing-agent** so it can use gh-cli-mcp MCP tools (workflows, issues, PRs, repo ops) or suggest equivalent `gh` CLI commands.
 
